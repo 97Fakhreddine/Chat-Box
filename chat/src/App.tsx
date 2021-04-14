@@ -6,7 +6,7 @@ import {
   BrowserRouter,
   RouteComponentProps,
 } from "react-router-dom";
-import routes from "./components/config/route";
+import routes from "./files/config/route";
 const App: React.FC = () => {
   return (
     <div className="App">
