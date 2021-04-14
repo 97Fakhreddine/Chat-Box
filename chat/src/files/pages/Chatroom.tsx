@@ -1,346 +1,129 @@
-import React from "react";
+import {
+  createStyles,
+  Input,
+  InputAdornment,
+  makeStyles,
+  TextField,
+  Theme,
+} from "@material-ui/core";
+import React, { useState } from "react";
 import "../../style/chatroom.css";
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      "& > *": {
+        margin: theme.spacing(1),
+        width: "25ch",
+      },
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: "25ch",
+    },
+  })
+);
+
 const Chatroom: React.FC<{}> = () => {
+  const classes = useStyles();
+
+  const [fakeData, setFakeData] = useState<number[]>([
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+  ]);
   return (
-    <div className="hm-gradient">
-      <div className="hm-gradient">
-        <main>
-          <div className="container mt-4">
-            <div className="row">
-              <div className="col-md-6 mb-4">
-                <div className="card">
-                  <div className="card-body">
-                    <h3 className="text-center default-text py-3">
-                      <i className="fa fa-lock"></i> Login:
-                    </h3>
-                    <div className="md-form">
-                      <i className="fa fa-envelope prefix grey-text"></i>
-                      <input
-                        type="text"
-                        id="defaultForm-email"
-                        className="form-control"
-                      />
-                      <label htmlFor="defaultForm-email">Your email</label>
-                    </div>
-                    <div className="md-form">
-                      <i className="fa fa-lock prefix grey-text"></i>
-                      <input
-                        type="password"
-                        id="defaultForm-pass"
-                        className="form-control"
-                      />
-                      <label htmlFor="defaultForm-pass">Your password</label>
-                    </div>
-                    <div className="text-center">
-                      <button className="btn btn-default waves-effect waves-light">
-                        next
-                      </button>
-                    </div>
-                  </div>
+    <div className="container">
+      <h3 className=" text-center">Messaging</h3>
+      <div className="messaging">
+        <div className="inbox_msg">
+          <div className="inbox_people">
+            <div className="headind_srch">
+              <div className="recent_heading">
+                <h4>Recent</h4>
+              </div>
+              <div className="srch_bar">
+                <div className="stylish-input-group">
+                  <form className={classes.root} noValidate autoComplete="off">
+                    <TextField id="standard-basic" label="Search..." />
+                  </form>
                 </div>
               </div>
-              <div className="col-md-6 mb-4">
-                <div className="card indigo form-white">
-                  <div className="card-body">
-                    <h3 className="text-center white-text py-3">
-                      <i className="fa fa-user"></i> Login:
-                    </h3>
-                    <div className="md-form">
-                      <i className="fa fa-envelope prefix white-text"></i>
-                      <input
-                        type="text"
-                        id="defaultForm-email1"
-                        className="form-control"
-                      />
-                      <label htmlFor="defaultForm-email1">Your email</label>
+            </div>
+            <div className="inbox_chat">
+              {fakeData.map((element, i) => {
+                return (
+                  <div className="chat_list">
+                    <div className="chat_people" key={i}>
+                      <div className="chat_img">
+                        {" "}
+                        <img
+                          src="https://ptetutorials.com/images/user-profile.png"
+                          alt="sunil"
+                        />{" "}
+                      </div>
+                      <div className="chat_ib">
+                        <h5>
+                          Sunil Rajput{" "}
+                          <span className="chat_date">Dec {element}</span>
+                        </h5>
+                        <p>
+                          Test, which is a new approach to have all solutions
+                          astrology under one roof.
+                        </p>
+                      </div>
                     </div>
-                    <div className="md-form">
-                      <i className="fa fa-lock prefix white-text"></i>
-                      <input
-                        type="password"
-                        id="defaultForm-pass1"
-                        className="form-control"
-                      />
-                      <label htmlFor="defaultForm-pass1">Your password</label>
-                    </div>
-                    <div className="text-center">
-                      <button className="btn btn-outline-white waves-effect waves-light">
-                        next
-                      </button>
-                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="mesgs">
+            <div className="msg_history">
+              <div className="incoming_msg">
+                <div className="incoming_msg_img">
+                  {" "}
+                  <img
+                    src="https://ptetutorials.com/images/user-profile.png"
+                    alt="sunil"
+                  />{" "}
+                </div>
+                <div className="received_msg">
+                  <div className="received_withd_msg">
+                    <p>Test which is a new approach to have all solutions</p>
+                    <span className="time_date"> 11:01 AM | June 9</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-md-6 mb-4">
-                <div className="card ripe-malinka-gradient form-white">
-                  <div className="card-body">
-                    <form>
-                      <h2 className="text-center font-up font-bold py-4 white-text">
-                        Sign up
-                      </h2>
-                      <div className="md-form">
-                        <i className="fa fa-user prefix white-text"></i>
-                        <input
-                          type="text"
-                          id="orangeForm-name2"
-                          className="form-control"
-                        />
-                        <label htmlFor="orangeForm-name2">Your name</label>
-                      </div>
-                      <div className="md-form">
-                        <i className="fa fa-envelope prefix white-text"></i>
-                        <input
-                          type="text"
-                          id="orangeForm-email2"
-                          className="form-control"
-                        />
-                        <label htmlFor="orangeForm-email2">Your email</label>
-                      </div>
-                      <div className="md-form">
-                        <i className="fa fa-lock prefix white-text"></i>
-                        <input
-                          type="password"
-                          id="orangeForm-pass2"
-                          className="form-control"
-                        />
-                        <label htmlFor="orangeForm-pass2">Your password</label>
-                      </div>
-                      <div className="text-center">
-                        <button className="btn btn-outline-white waves-effect waves-light">
-                          next
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6 mb-4">
-                <div className="card">
-                  <div className="card-body">
-                    <form>
-                      <h2 className="text-center font-up font-bold deep-orange-text py-4">
-                        Sign up
-                      </h2>
-                      <div className="md-form">
-                        <i className="fa fa-user prefix grey-text"></i>
-                        <input
-                          type="text"
-                          id="orangeForm-name3"
-                          className="form-control"
-                        />
-                        <label htmlFor="orangeForm-name3">Your name</label>
-                      </div>
-                      <div className="md-form">
-                        <i className="fa fa-envelope prefix grey-text"></i>
-                        <input
-                          type="text"
-                          id="orangeForm-email3"
-                          className="form-control"
-                        />
-                        <label htmlFor="orangeForm-email3">Your email</label>
-                      </div>
-                      <div className="md-form">
-                        <i className="fa fa-lock prefix grey-text"></i>
-                        <input
-                          type="password"
-                          id="orangeForm-pass3"
-                          className="form-control"
-                        />
-                        <label htmlFor="orangeForm-pass3">Your password</label>
-                      </div>
-                      <div className="text-center">
-                        <button className="btn btn-deep-orange">
-                          next
-                          <i
-                            className="fa fa-angle-double-right pl-2"
-                            aria-hidden="true"
-                          ></i>
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6 mb-4">
-                <div className="card">
-                  <div className="card-body">
-                    <form>
-                      <h2 className="text-center py-4 font-bold font-up danger-text">
-                        Contact us
-                      </h2>
-                      <div className="md-form">
-                        <i className="fa fa-user prefix grey-text"></i>
-                        <input
-                          type="text"
-                          id="form31"
-                          className="form-control"
-                        />
-                        <label htmlFor="form31">Your name</label>
-                      </div>
-                      <div className="md-form">
-                        <i className="fa fa-envelope prefix grey-text"></i>
-                        <input
-                          type="text"
-                          id="form21"
-                          className="form-control"
-                        />
-                        <label htmlFor="form21">Your email</label>
-                      </div>
-                      <div className="md-form">
-                        <i className="fa fa-tag prefix grey-text"></i>
-                        <input
-                          type="text"
-                          id="form321"
-                          className="form-control"
-                        />
-                        <label htmlFor="form341">Subject</label>
-                      </div>
-                      <div className="md-form">
-                        <i className="fa fa-pencil prefix grey-text"></i>
-                        <textarea
-                          id="form81"
-                          className="md-textarea"
-                          style={{ height: "100px" }}
-                        ></textarea>
-                        <label htmlFor="form81">Your message</label>
-                      </div>
-                      <div className="text-center">
-                        <button className="btn btn-outline-danger btn-lg">
-                          Send
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6 mb-4">
-                <div className="card bg-secondary form-white">
-                  <div className="card-body">
-                    <form>
-                      <h2 className="text-center py-4 font-bold font-up white-text">
-                        Contact us
-                      </h2>
-                      <div className="md-form">
-                        <i className="fa fa-user prefix white-text"></i>
-                        <input
-                          type="text"
-                          id="form32"
-                          className="form-control"
-                        />
-                        <label htmlFor="form32">Your name</label>
-                      </div>
-                      <div className="md-form">
-                        <i className="fa fa-envelope prefix white-text"></i>
-                        <input
-                          type="text"
-                          id="form22"
-                          className="form-control"
-                        />
-                        <label htmlFor="form22">Your email</label>
-                      </div>
-                      <div className="md-form">
-                        <i className="fa fa-tag prefix white-text"></i>
-                        <input
-                          type="text"
-                          id="form322"
-                          className="form-control"
-                        />
-                        <label htmlFor="form342">Subject</label>
-                      </div>
-                      <div className="md-form">
-                        <i className="fa fa-pencil prefix white-text"></i>
-                        <textarea
-                          id="form82"
-                          className="md-textarea"
-                          style={{ height: "100px" }}
-                        ></textarea>
-                        <label htmlFor="form82">Your message</label>
-                      </div>
-                      <div className="text-center">
-                        <button className="btn btn-info btn-lg">Send</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6 mb-4">
-                <div className="card near-moon-gradient form-white">
-                  <div className="card-body">
-                    <form>
-                      <h3 className="text-center indigo-text font-bold py-4">
-                        <strong>Subscribe</strong>
-                      </h3>
-                      <div className="md-form">
-                        <i className="fa fa-user prefix white-text"></i>
-                        <input
-                          type="text"
-                          id="form35"
-                          className="form-control"
-                        />
-                        <label htmlFor="form35">Your name</label>
-                      </div>
-                      <div className="md-form">
-                        <i className="fa fa-envelope prefix white-text"></i>
-                        <input
-                          type="text"
-                          id="form25"
-                          className="form-control"
-                        />
-                        <label htmlFor="form25">Your email</label>
-                      </div>
-                      <div className="text-center py-4">
-                        <button className="btn btn-indigo">
-                          Send <i className="fa fa-paper-plane-o ml-1"></i>
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6 mb-4">
-                <div className="card">
-                  <div className="card-body">
-                    <form>
-                      <h3 className="text-center pink-text font-bold py-4">
-                        <strong>Subscribe</strong>
-                      </h3>
-                      <div className="md-form">
-                        <i className="fa fa-user prefix grey-text"></i>
-                        <input
-                          type="text"
-                          id="orangeForm-name37"
-                          className="form-control"
-                        />
-                        <label htmlFor="orangeForm-name37">Your name</label>
-                      </div>
-                      <div className="md-form">
-                        <i className="fa fa-envelope prefix grey-text"></i>
-                        <input
-                          type="text"
-                          id="orangeForm-email37"
-                          className="form-control"
-                        />
-                        <label htmlFor="orangeForm-email37">Your email</label>
-                      </div>
-                      <div className="text-center py-4">
-                        <button className="btn btn-outline-pink">
-                          Send <i className="fa fa-paper-plane-o ml-1"></i>
-                        </button>
-                      </div>
-                    </form>
-                  </div>
+            <div className="type_msg">
+              <div className="input_msg_write">
+                <input
+                  type="text"
+                  className="write_msg"
+                  placeholder="Type a message"
+                />
+                <div>
+                  <Input
+                    id="standard-adornment-amount"
+                    className={classes.textField}
+                  />
+                  <button className="msg_send_btn" type="button">
+                    <i className="fa fa-paper-plane-o" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </main>
+        </div>
       </div>
     </div>
   );

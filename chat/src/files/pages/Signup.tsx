@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import "../../style/signup.css";
 import { Button, Icon } from "@material-ui/core";
 import axios from "axios";
+import auth from "../config/auth";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -71,30 +72,38 @@ const Signup: React.FC<{}> = (props) => {
   );
   const sumbitSignUp: Function = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3001/register", form)
-      .then(({ data }) => {
-        // test to redirect to home
-        localStorage.setItem("token", data.token);
-        history.push("/chatroom");
-      })
-      .catch((err) => {
-        // we will check if one of the inputs are empty we'll change the message
-        if (form.username == "" || form.email == "" || form.password == "") {
-          setFailtoLogin("please fill all the information");
-          alert(failToLogin);
-          return;
-        } else {
-          alert(failToLogin);
-        }
-      });
+    if (form.username == "" || form.email == "" || form.password == "") {
+      setFailtoLogin("please fill all the information");
+      alert(failToLogin);
+      return;
+    } else {
+      axios
+        .post("http://localhost:3001/users/signup", form)
+        .then(({ data }) => {
+          // test to redirect to home
+          auth.login(() => {
+            localStorage.setItem("token", data.token);
+            history.push("/chatroom");
+          });
+        })
+        .catch((err) => {
+          // we will check if one of the inputs are empty we'll change the message
+          if (form.username == "" || form.email == "" || form.password == "") {
+            setFailtoLogin("please fill all the information");
+            alert(failToLogin);
+            return;
+          } else {
+            alert(failToLogin);
+          }
+        });
+    }
   };
 
   // the url must be changed to the url of google callback
 
   const loginWithGoole: Function = () => {
     const win: any = window.open(
-      "http://localhost:3000",
+      "http://localhost:3001",
       "windowname1",
       "width=800, height=600"
     );

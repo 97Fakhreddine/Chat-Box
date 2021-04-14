@@ -6,9 +6,11 @@ import { Strategy, VerifyCallBack } from 'passport-google-oauth20';
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor() {
     super({
-      clientID: process.env.CLIEND_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/google/callback',
+      clientID:
+        '891692944437-h62krcvdv2f2qeqdc1pimopihltpb0ae.apps.googleusercontent.com' ||
+        process.env.CLIEND_ID,
+      clientSecret: 'DR16Rh3Ng7aRWDjb7fke_iIA' || process.env.CLIENT_SECRET,
+      callbackURL: 'http://localhost:3001/auth/google/callback',
       scope: ['email', 'profile'],
     });
   }

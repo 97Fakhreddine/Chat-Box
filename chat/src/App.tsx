@@ -7,6 +7,8 @@ import {
   RouteComponentProps,
 } from "react-router-dom";
 import routes from "./files/config/route";
+import { ProtectedRoute } from "./files/config/ProtectedRoute";
+import Chatroom from "./files/pages/Chatroom";
 const App: React.FC = () => {
   return (
     <div className="App">

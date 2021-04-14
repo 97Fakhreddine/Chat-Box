@@ -20,25 +20,6 @@ class UserVerify {
 export class AuthController {
   response: any;
   constructor(private readonly authService: AuthService) {}
-  @ApiTags('register/google')
-  @ApiCreatedResponse({
-    status: 200,
-    description: 'Google OAuth Success',
-    type: String,
-  })
-  @ApiUnauthorizedResponse({ description: 'USER DOES NOT EXIST IN GOOGLE' })
-  @Get('register/google')
-  @UseGuards(AuthGuard('google'))
-  googleAuth(@Req() req, @Res() res) {
-    this.response = res;
-  }
-  @ApiTags('auth/google/callback')
-  @Get('auth/google/callback')
-  @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@Req() req, @Res() res) {
-    const { token } = await this.authService.googleLogin(req, res);
-    res.redirect('http://localhost:3000/' + token);
-  }
 
   @ApiTags('auth')
   @Get('verify')
@@ -52,7 +33,7 @@ export class AuthController {
     type: UserVerify,
   })
   @ApiUnauthorizedResponse({ description: 'Invalide Cridentials' })
-  verifyUser(@Headers() header): Promise<Error | object| VerifiedUser> {
+  verifyUser(@Headers() header): Promise<Error | object | VerifiedUser> {
     return this.authService.verifyUser(header);
   }
 }
