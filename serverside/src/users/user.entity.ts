@@ -19,7 +19,7 @@ export class Users {
   email: string; //required
   @Column({ length: 150 })
   password: string; //required
-  @Column({ length: 150 })
+  @Column({ length: 150, default: null })
   emailToken: string;
 }
 export interface User {
