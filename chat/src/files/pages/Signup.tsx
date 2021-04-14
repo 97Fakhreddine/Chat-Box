@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import "../../style/signup.css";
 import { Button, Icon } from "@material-ui/core";
 import axios from "axios";
+import auth from "../config/auth";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -80,8 +81,10 @@ const Signup: React.FC<{}> = (props) => {
         .post("http://localhost:3001/users/signup", form)
         .then(({ data }) => {
           // test to redirect to home
-          localStorage.setItem("token", data.token);
-          history.push("/chatroom");
+          auth.login(() => {
+            localStorage.setItem("token", data.token);
+            history.push("/chatroom");
+          });
         })
         .catch((err) => {
           // we will check if one of the inputs are empty we'll change the message
