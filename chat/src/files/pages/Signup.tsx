@@ -3,8 +3,8 @@ import { useHistory, Link } from "react-router-dom";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import "../../style/signup.css";
-import { Button } from "@material-ui/core";
-
+import { Button, Icon } from "@material-ui/core";
+import axios from "axios";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -44,7 +44,13 @@ const Signup: React.FC<{}> = (props) => {
    * @returns object contains the input data in order to be submitted.
    */
 
-  const [form, setForm] = useState<object>({
+  interface Form {
+    username: string;
+    email: string;
+    password: string;
+  }
+
+  const [form, setForm] = useState<Form>({
     username: "",
     email: "",
     password: "",
@@ -60,19 +66,67 @@ const Signup: React.FC<{}> = (props) => {
       [event.target.name]: event.target.value,
     });
   };
-
+  const [failToLogin, setFailtoLogin] = useState<string>(
+    "please fill all the information"
+  );
   const sumbitSignUp: Function = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    axios
+      .post("http://localhost:3001/register", form)
+      .then(({ data }) => {
+        // test to redirect to home
+        localStorage.setItem("token", data.token);
+        history.push("/chatroom");
+      })
+      .catch((err) => {
+        // we will check if one of the inputs are empty we'll change the message
+        if (form.username == "" || form.email == "" || form.password == "") {
+          setFailtoLogin("please fill all the information");
+          alert(failToLogin);
+          return;
+        } else {
+          alert(failToLogin);
+        }
+      });
+  };
 
-    // test to redirect to home
-    history.push("/");
+  // the url must be changed to the url of google callback
+
+  const loginWithGoole: Function = () => {
+    const win: any = window.open(
+      "http://localhost:3000",
+      "windowname1",
+      "width=800, height=600"
+    );
+    const validateToken = (token: string) => {
+      localStorage.setItem("token", token);
+      history.push("/chatroom");
+      window.clearInterval(pollTimer);
+      clearInterval(pollTimer);
+      win.close();
+    };
+    const pollTimer = window.setInterval(async () => {
+      try {
+        let url = win.document.URL;
+        let token = url.slice(22, url.length - 1);
+        console.log("====================================");
+        console.log(token);
+        console.log("====================================");
+        if (token !== "") {
+          localStorage.setItem("token", token);
+          validateToken(token);
+          return;
+        }
+        return;
+      } catch (e) {}
+    }, 1000);
   };
 
   useEffect(() => {
     console.log(form);
   }, [form]);
   return (
-    <div>
+    <div className="md-form">
       <h1>Sign up now</h1>
       <div className={all.root} id="form">
         <form className={classes.root} noValidate autoComplete="off">
@@ -101,7 +155,11 @@ const Signup: React.FC<{}> = (props) => {
           <Button variant="contained" onClick={(e) => sumbitSignUp(e)}>
             Submit
           </Button>
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => loginWithGoole()}
+          >
             Google
           </Button>
         </div>

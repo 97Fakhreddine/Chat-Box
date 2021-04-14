@@ -1,4 +1,5 @@
 import IRoute from "../interfaces/route";
+import Chatroom from "../pages/Chatroom";
 import HomePage from "../pages/HomePage";
 import Signup from "../pages/Signup";
 
@@ -13,6 +14,12 @@ const routes: IRoute[] = [
     path: "/signup",
     name: "signup Page",
     component: Signup,
+    exact: true,
+  },
+  {
+    path: "/chatroom",
+    name: "chatroom Page",
+    component: Chatroom,
     exact: true,
   },
 ];
