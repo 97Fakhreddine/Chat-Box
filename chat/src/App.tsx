@@ -7,8 +7,9 @@ import {
   RouteComponentProps,
 } from "react-router-dom";
 import routes from "./files/config/route";
-import { ProtectedRoute } from "./files/config/ProtectedRoute";
-import Chatroom from "./files/pages/Chatroom";
+// import { ProtectedRoute } from "./files/config/ProtectedRoute";
+// import Chatroom from "./files/pages/Chatroom";
+// import HomePage from "./files/pages/HomePage";
 const App: React.FC = () => {
   return (
     <div className="App">
@@ -30,6 +31,13 @@ const App: React.FC = () => {
               />
             );
           })}
+          {/* <ProtectedRoute
+            exact
+            component={routes[0].component}
+            authenticated={true}
+            path={routes[0].path}
+          /> */}
+          ;
         </Switch>
       </BrowserRouter>
     </div>

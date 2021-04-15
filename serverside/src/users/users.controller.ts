@@ -16,6 +16,13 @@ export class UserSignUp {
   @ApiProperty()
   password: string;
 }
+
+export class UserLogin {
+  @ApiProperty()
+  email: string;
+  @ApiProperty()
+  password: string;
+}
 @Controller('users')
 export class UsersController {
   constructor(private readonly userRepo: UsersService) {}
@@ -29,5 +36,17 @@ export class UsersController {
   @ApiBody({ type: UserSignUp, required: true })
   signup(@Body() body: UserSignUp): Promise<object | Error> {
     return this.userRepo.signup(body);
+  }
+
+  @ApiTags('users')
+  @Post('login')
+  @ApiCreatedResponse({
+    description: 'User has been successfully created.',
+    type: UserLogin,
+  })
+  @ApiUnauthorizedResponse({ description: 'Invalide Cridentials' })
+  @ApiBody({ type: UserLogin, required: true })
+  login(@Body() body: UserLogin): Promise<object | Error> {
+    return this.userRepo.login(body);
   }
 }

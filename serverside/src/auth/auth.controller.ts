@@ -33,7 +33,7 @@ export class AuthController {
     type: UserVerify,
   })
   @ApiUnauthorizedResponse({ description: 'Invalide Cridentials' })
-  verifyUser(@Headers() header): Promise<Error | object | VerifiedUser> {
+  verifyUser(@Headers() header): Promise<Error | VerifiedUser> {
     return this.authService.verifyUser(header);
   }
 }

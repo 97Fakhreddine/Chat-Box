@@ -39,7 +39,7 @@ const HomePage: React.FC<{}> = () => {
               <div className="collapse navbar-collapse" id="navigation">
                 <ul className="nav navbar-nav navbar-right">
                   <li>
-                    <Link to="/about">About</Link>
+                    <Link to="/login">Login</Link>
                   </li>
                   <li>
                     <Link to="/signup">Sign in</Link>
