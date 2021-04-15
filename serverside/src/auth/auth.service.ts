@@ -57,19 +57,28 @@ export class AuthService {
     }
   }
 
-  async verifyUser(hearder: object): Promise<VerifiedUser | Error | object> {
+  async verifyUser(hearder): Promise<VerifiedUser | Error> {
     try {
-      console.log(hearder);
-
-      //   const tokeN: string = await authorization.split(' ')[1];
-      //   const verify = await this.jwtService.verify(tokeN, jwtConstants);
-      //   const user = await this.userRepository.findOne({
-      //     email: verify.username,
-      //   });
-      //   return user;
-      return {
-        username: 'progress..',
-      };
+      const token = await hearder.authorization.split(' ')[1];
+      const verify = await this.jwtService.verify(token, jwtConstants);
+      const user = await this.userRepository.findOne({
+        email: verify.username,
+      });
+      if (user) {
+        const refreshToken = await this.jwtService.sign(
+          {
+            username: user.email,
+          },
+          jwtConstants,
+        );
+        return {
+          username: user.username,
+          email: user.email,
+          token: refreshToken,
+        };
+      } else {
+        return new NotFoundException('NOT FOUND');
+      }
     } catch (err) {
       return new NotFoundException('NOT FOUND');
     }

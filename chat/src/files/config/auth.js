@@ -7,6 +7,7 @@ class Auth {
     callback();
   }
   logout(callback) {
+    localStorage.removeItem("token");
     callback();
   }
   isAuthenticated() {

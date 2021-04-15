@@ -151,12 +151,14 @@ const Signup: React.FC<{}> = (props) => {
             label="Email"
             name="email"
             onChange={(e) => updateForm(e)}
+            type="email"
           />
           <TextField
             id="standard-basic"
             label="Password"
             color="secondary"
             name="password"
+            type="password"
             onChange={(e) => updateForm(e)}
           />
         </form>

@@ -1,14 +1,18 @@
 import {
+  Button,
   createStyles,
   Input,
-  InputAdornment,
   makeStyles,
   TextField,
   Theme,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import "../../style/chatroom.css";
-
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import logging from "../config/logging";
+import auth from "../config/auth";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -22,27 +26,78 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(1),
       width: "25ch",
     },
+    logoutBtn: {
+      position: "relative",
+      float: "right",
+      marginBottom: "5%",
+    },
   })
 );
 
+export interface UserData {
+  username: string;
+  email: string;
+  token: string;
+}
 const Chatroom: React.FC<{}> = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const [fakeData] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const [userData, setUserData] = useState<UserData>({
+    username: "ananymous",
+    email: "ananymous",
+    token: "ananymous",
+  });
+  /**
+   * @function verifyUser
+   * @param {empty}
+   * @returns userData and check whether the user is allowed to keep staying login or it will redirect him to the login page
+   *
+   */
+  const verifyUser: Function = () => {
+    // we need to get the token from the localstorage
+    const token = localStorage.getItem("token");
+    // we need to set the token in the headers and send a get request to the endpoint verify
+    const header = {
+      Authorization: `Bearer ${token}`,
+    };
+    axios
+      .get("http://localhost:3001/auth/verify", {
+        headers: header,
+      })
+      .then(({ data }) => {
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          setUserData(data);
+        } else {
+          localStorage.removeItem("token");
+          history.push("/login");
+        }
+      })
+      .catch((err) => {
+        localStorage.removeItem("token");
+        history.push("/login");
+      });
+  };
+  useEffect(() => {
+    verifyUser();
+  }, []);
 
-  const [fakeData, setFakeData] = useState<number[]>([
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-  ]);
   return (
     <div className="container">
-      <h3 className=" text-center">Messaging</h3>
+      <h3 className=" text-center">Messaging for: {userData.username}</h3>
+      <Button
+        variant="contained"
+        className={classes.logoutBtn}
+        endIcon={<ExitToAppIcon />}
+        onClick={(event) =>
+          auth.logout(() => {
+            history.push("/");
+          })
+        }
+      >
+        Logout
+      </Button>
       <div className="messaging">
         <div className="inbox_msg">
           <div className="inbox_people">
